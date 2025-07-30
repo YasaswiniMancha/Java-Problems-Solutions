@@ -1,0 +1,109 @@
+String Operations
+---------------------
+
+=> Declarations:
+
+~ String s;
+~ String str1 = "Hello";
+~ String str2 = new String("World");
+
+=> Methods & string manipulations:
+
+~ String full = str1 + " " + str2;          // concatenation Using +
+
+~ String full2 = str1.concat(" " + str2);   // Using concat() method
+
+~ int len = str1.length();                  //to find length of the string
+
+~ char ch = str1.charAt(1);                 // Character at Specific Index
+
+~ String sub1 = str1.substring(1);     // prints "ello"  with substring method
+~ String sub2 = str1.substring(1, 4);  // prints "ell"   with substring method
+
+~ boolean hasLetters = str1.contains("ll"); // prints true or false if that particular "ll" phrase or letter there in string
+
+~ String text = "apple,banana,grape";            
+~ String[] fruits = text.split(","); // ["apple", "banana", "grape"]  //using , comma separator it splits the string and converts to string array
+
+~ String str1= "Hello"
+~ char[] arr = str1.toCharArray(); // ['H', 'e', 'l', 'l', 'o']  //convert string to character array
+
+~ String name = "Yash";
+~ int age = 25;
+~ String formatted = String.format("Name: %s, Age: %d", name, age);   //string formatting  Output: "Name: Yash, Age: 25"
+
+~ String joined = String.join("-", "2025", "07", "30");   //Combines strings using a delimiter   Output: "2025-07-30"
+
+~ isEmpty() → Checks if string is length 0.
+~ isBlank() → Also considers whitespace-only strings.
+~   "".isEmpty();       // true
+~   "   ".isEmpty();    // false
+~   "   ".isBlank();    // true (Java 11+)
+
+~ String repeated = "ha".repeat(3); // Output: "hahaha"
+
+~ strip() method to remove extra spaces
+  "  hello  ".strip();        // "hello"   
+  "  hello  ".stripLeading(); // "hello  "  it removes infront spaces of string
+  "  hello  ".stripTrailing();// "  hello"   it removes afterward spaces string
+
+~ StringBuilder / StringBuffer for Efficient Modification 
+Both StringBuilder and StringBuffer are used when you need to modify strings (append, insert, delete, etc.) efficiently without creating new objects every time.
+
+String is immutable. Use StringBuilder if you're doing lots of changes.
+StringBuilder sb = new StringBuilder("Hello");
+sb.append(" World");    // "Hello World"
+sb.insert(0, "Say ");   // "Say Hello World"
+sb.reverse();           // "dlroW olleH yaS"
+
+and for thread-safety we mostly use string buffer. String builder is not useful in that case and causes data corruption.
+
+StringBuffer sbf = new StringBuffer("Spring");
+sbf.append(" Boot");
+System.out.println(sbf); // Spring Boot
+
+Shared StringBuffer instance across threads:
+StringBuffer buffer = new StringBuffer();
+Runnable task = () -> {
+    for (int i = 0; i < 100; i++) {
+        buffer.append(i);
+    }
+};
+
+~ Common Methods (same in both):
+append(String s)
+insert(int offset, String s)
+delete(int start, int end)
+reverse()
+toString()
+length()
+
+~ for Fast execution, single thread	StringBuilder
+~ for Safe execution, multi-threaded	StringBuffer
+
+
+~ Replacing with Regex (replaceAll, replaceFirst)
+Useful for pattern-based replacements.
+String input = "abc123xyz456";
+String onlyDigits = input.replaceAll("\\D+", "");    //     o/p: "123456"    it removes all the alphabets and remains only digits.
+
+~ Convert String to Other Types
+int number = Integer.parseInt("123");
+double d = Double.parseDouble("3.14");
+boolean b = Boolean.parseBoolean("true");
+
+~ Case-insensitive comparison using equalsIgnoreCase()
+"JAVA".equalsIgnoreCase("java"); // true
+
+~ Regular Expression Matching
+"abc123".matches("[a-z]+\\d+"); // true
+
+
+
+
+
+
+
+
+
+
