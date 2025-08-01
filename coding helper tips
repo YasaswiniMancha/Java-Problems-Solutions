@@ -1,0 +1,80 @@
+-> We use a LinkedHashMap instead of a regular HashMap so that the order of characters is maintained — this helps to find the first non-repeating character. The map will store Key: Character from the string ,Value: Frequency (count of times it appears)
+         Map<Character, Integer> freqMap = new LinkedHashMap<>(); 
+        
+         Ex: success
+         
+        // this loop Counts character frequencies
+        for (char ch : s.toCharArray()) {
+            freqMap.put(ch, freqMap.getOrDefault(ch, 0) + 1); //getOrDefault(ch, 0) → if the character is not in the map yet, return 0.  Then we add 1 to that value and store it back using put. This step counts how many times each character appears in the string.
+        }  //freq= [s:3, u:1, c:2, e:1]   
+                
+         //this Finds the first character with frequency 1
+        for (Map.Entry<Character, Integer> entry : freqMap.entrySet()) {  //This loops through the freqMap entries in insertion order (thanks to LinkedHashMap).
+            if (entry.getValue() == 1) {  //If the frequency is 1, that character occurred only once.
+                return entry.getKey();  // Return the first character that occurs only once.  o/p: u
+            }
+        }
+        
+        
+        //this finds the index  where the first non-repetitive character occurs in string
+         for(int i=0; i< s.length(); i++){     //loop through the string
+         if(freq.get(s.charAt(i))==1){        //if in (map)freq anywhere this i (index) char occurs only once then return index i
+            return i;                        //o/p: 1 (at index no:1)
+         }
+      }
+
+      
+-> Add Map Entries to a Max-Heap (PriorityQueue) i.e,  A max-heap is used to always get the character with the highest frequency first.
+
+
+PriorityQueue<Map.Entry<Character, Integer>> maxHeap = new PriorityQueue<>(
+    (a, b) -> b.getValue() - a.getValue());    // Comparator: (a, b) -> b.getValue() - a.getValue() sorts the characters in descending order of frequency.
+maxHeap.addAll(freqMap.entrySet());  //freqMap.entrySet() gives you key-value pairs like (e, 2), (r, 1)  and maxHeap.addAll(...) method adds all these pairs to the priority queue.
+
+StringBuilder sb = new StringBuilder();      //string builder to form a required o/p.
+while (!maxHeap.isEmpty()) {  //loop until maxHeap becomes empty
+    Map.Entry<Character, Integer> entry = maxHeap.poll();  //poll() Removes and returns the element at the front (top) of the priority queue. Since we sorted the queue using a custom comparator (highest frequency first), poll() gives the character with the highest frequency.
+    char ch = entry.getKey();
+    int count = entry.getValue();
+    for (int i = 0; i < count; i++) {
+        sb.append(ch);
+    }
+}
+
+
+-> Count the percentage given character in a word.
+
+        int countOfChars= s.length();     //count num of letters in given string
+        Map<Character, Integer> freq = new HashMap<>();  //count freq of each char
+        for (char ch : s.toCharArray()) {                
+            freq.put(ch, freq.getOrDefault(ch,0)+1);
+        }
+        System.out.println("freq: "+freq);
+        int percent =0;
+       for(Map.Entry<Character, Integer> entry : freq.entrySet()){  //loop through freq map to find given letter
+        if(entry.getKey().equals(letter)){  // if given letter was found --> true
+             percent = (entry.getValue() * 100) / countOfChars;  //just a floor division
+            break;
+           }
+        }
+        
+->   Sliding Window Behavior to solve longest substring without repetition   // ex: yashyess   o/p: ashye
+
+         Set<Character> seen = new HashSet<>();   //we took empty hashset to find substrings first  , character set looks like   just for ex: [y,a,s,h,y,e,s,s]
+           int right=0;
+           int left =0;
+            
+            int maxLen=0;
+
+           for(right=0; right< s.length(); right++ ){
+               char ch = s.charAt(right);
+               while(seen.contains(ch)){
+                  seen.remove(s.charAt(left)) ;
+                  left ++;
+              }
+            
+            seen.add(ch);
+             maxLen= Math.max(maxLen ,right-left +1);
+
+           }
+           return maxLen;
