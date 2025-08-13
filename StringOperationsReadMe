@@ -34,8 +34,8 @@ String Operations
 
 ~ String joined = String.join("-", "2025", "07", "30");   //Combines strings using a delimiter   Output: "2025-07-30"
 
-~ isEmpty() → Checks if string is length 0.
-~ isBlank() → Also considers whitespace-only strings.
+~ isEmpty() → Checks if string is length 0.(considers even a whitespace)
+~ isBlank() → does  not considers whitespace strings.
 ~   "".isEmpty();       // true
 ~   "   ".isEmpty();    // false
 ~   "   ".isBlank();    // true (Java 11+)
